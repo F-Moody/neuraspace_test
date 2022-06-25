@@ -1,90 +1,35 @@
 # Neuraspace Frontend challenge :rocket:
 
-## Introduction
+## Notes and Explanations
 
-This is a simple React webapp that displays a list of space-related news.
+Hello, just wanted to give you a little bit of context on the idea behind this.
 
-It retrieves data from SpaceDev's API (https://www.spaceflightnewsapi.net/ / https://api.spaceflightnewsapi.net/v3/documentation) and uses MUI as an UI framework (https://mui.com/)
+You will see a design-system folder, this folder ultimatly would be imported as an npm module and holds the primitives for the ListItem and ListComponent.
+The primitives are built taking advantage of children api in order to be able to compose and reuse them as much as it could.
 
-The goals for this challenge are to assess your familiarity with React in general, code structure/organization and unit testing.
+On the components folder you will find the actual components that would be used inside the project extending the primitives ones.
 
-## What we value
+I removed an unnecessary useCallBack hook inside the home. In my opinion is not necessary for a couple of reasons:
+First => without the useCallBack the javascript garbage collector will clean up the old function initialization and construct a new one
+Second => useCallBack and useMemo comes with a price. Memoization means caching and means that object must be stored in memory for future references, if you're not doing heavy 
+calculation is not needed and performances might be worse
+Third => useCallBack without the React.Memo component is not very usefull, if you want to prevent unnecessary rerender you should use it
+in conjuntion with React.Memo
 
-The objective of the test, from a coding perspective, is that you code is as next to
-production code as possible. It should be properly documented, with tests, and ready to be used. If
-you need to trade-off between adding nice-to-haves for production readiness, go for production
-readiness. The result of this exercise doesn’t need to be big. It needs to reflect what you believe
-production-like quality looks like.
+I've added useCallBack and useMemo inside the Context, for this example is not necessary but if in the future the Context will stay under a different tree path the parent 
+rerender will cause the Context to rerender and all the child with it. To optimize the context could be splitted in two ( one for the setter and another for the 
+state value) or you can read the value from the component and then React.Memo the return of the component to avoid unnecessary rerender.
 
-# The challenge
+I've added just a test case on the search functionallity because it was explicitly asked so, i'm testing that the function that calls the api will be called 
+with the right parameters (as the search value)
 
-## Task 1 - Code structure
+I removed the search button as in my opinion was not needed
 
-The project's source code is lacking some structure which tipically hinders the team performance and code maintainability down the road.
+I'm using suspense and i'm letting react-query throw a promise in order to display a fallback and suspend the ListComponent render until the data
+is there. We could also wrap it with an error boundary to catch errors.
+I'm using useDeferredValue in order to better the user experience, calling the search without interrupting the input field experience.
+I'm also using startTransition so react will try to render the new list but will wait until the promise is fullfilled. React will do this in the background
+keeping the previous list on the screen. This will help performance and will also avoid to write a better loader with a fixed height to avoid page jumps.
+To give a feedback to the user i'm using the pending value to increase the opacity on the page.
 
-Your first task is to refactor/restructure the source code as if this was a production app.
-
-You'll be asked to comment on your decisions in regards to how the code structure:
-
--   helps the team scale
--   enforces consistency and clarity
--   promotes a good separation of concerns
-
-## Task 2 - Implement a feature
-
-After you run the app, you'll notice that there is a pagination placeholder above the articles list.
-
-The goal is for you to implement pagination for this list.
-
-You'll need to check the API documentation to figure out how pagination is done on the API side.
-
-MUI's [TablePagination](https://mui.com/material-ui/api/table-pagination/#main-content) component can be used to help speed things up
-
-```jsx
-<TablePagination
-    count={100}
-    page={0}
-    rowsPerPage={10}
-    onPageChange={() => {}}
-/>
-```
-
-Feel free to use more feature-rich HTTP libraries like [react-query](https://react-query.tanstack.com/) or [swr](https://swr.vercel.app/);
-
-The main goal of this task is to assess the familiarity with REST APIs and the overall knowledge of React hooks like useState, ...
-
-## Task 3 - Fix a bug
-
-For some reason, the search functionality isn't working. E.g. if someone searches for "Nasa", the articles aren't filtered.
-
-This task is comprised of 2 parts:
-
--   Fix the bug :)
--   Write a unit test that prevents this bug from happening again
-
-## Task 4 - Handle global state
-
-Lastly, we want to let a user star/unstar articles.
-
-Here are the requirements for this feature:
-
--   The list of starred articles should be persisted (reloading the page should preserve the starred list). Local storage is acceptable
--   Each article card should have a toggle that the user can click to start/unstar an article
--   On the topbar, there should be a component that displays the number of starred articles
-
-The goal for this task is to assess your familiarity with state management. We value the use of React's ContextAPI higher than state management libraries (e.g. Redux).
-
-## Getting started
-
-_This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app)._
-
-Click the "Use this template" button and create a repo on your user space.
-
-After you clone the repository, in the project directory, run:
-
--   `npm install`
--   `npm start`
-
-That's it, you're set.
-
-# Good luck :raised_hands:
+I didn't care much about ui as it was not required and i focused only on the functionalities.

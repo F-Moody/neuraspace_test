@@ -3,15 +3,17 @@ import {
     Box,
     TextField,
     InputAdornment,
-    Button,
     CircularProgress
 } from "@mui/material";
 import SearchRounded from "@mui/icons-material/SearchRounded";
 import ArticleList from './components/article/ArticleList'
+import {useArticleContext} from "./context/context";
 
 
 export const Home = () => {
     const [search, setSearch] = React.useState("");
+    const {favourites} = useArticleContext()
+    const favouritecount = Object.keys(favourites).length
 
     return (
         <>
@@ -23,7 +25,7 @@ export const Home = () => {
                     justifyContent: "space-between",
                 }}
             >
-                <Box>
+                <Box sx={{ display: 'flex', columnGap: "8px"}}>
                     <TextField
                         id="input-with-icon-textfield"
                         onChange={(e) => setSearch(e.target.value)}
@@ -36,12 +38,11 @@ export const Home = () => {
                         }}
                         variant="standard"
                     />
-                    <Button onClick={() => {
-                    }}>Search</Button>
+                        <p>Search</p>
+
                 </Box>
-                <Box sx={{px: 2, border: "1px solid red"}}>
-                    <p>Task 2: Implement pagination</p>
-                </Box>
+                <Box> <p>Favourite articles number : {favouritecount}</p></Box>
+
             </Box>
             <div>
                 <Suspense fallback={<CircularProgress/>}>

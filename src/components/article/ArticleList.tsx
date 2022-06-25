@@ -1,25 +1,11 @@
 import React, {useDeferredValue, useTransition} from 'react'
-import {Api, Article} from "../../api";
+import {Article} from "../../api/api";
 import {useQuery} from "react-query";
 import {TablePagination} from "@mui/material";
 import ListComponent from "../../design-system/List/ListComponent";
 import ArticleComponent from "./Article"
+import { countArticles, getArticles} from "../../api/apiCalls";
 
-const client = new Api();
-
-const countArticles = () => client.articles.countList().then(count => count.data)
-
-const getArticles = (page: number, search: string, rowPerPage: number) => {
-    return client.articles
-        .articlesList({
-            title_contains: search,
-            _limit: rowPerPage,
-            _start: (page * rowPerPage) - rowPerPage,
-        })
-        .then(({data}) => {
-            return data
-        });
-}
 
 type Props = {
     search: string
@@ -57,7 +43,7 @@ export default ({search}: Props) => {
             </ListComponent>
             <TablePagination
                 count={articlesCount as number || 1}
-                page={page}
+                page={articlesCount ? page : 0}
                 rowsPerPage={rowPerPage}
                 onPageChange={onPageChange}
                 onRowsPerPageChange={onRowPerPageChange}
