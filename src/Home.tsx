@@ -1,38 +1,17 @@
-import React from "react";
+import React, {Suspense} from "react";
 import {
-    Card,
-    CardContent,
-    Typography,
     Box,
-    CardMedia,
-    CardHeader,
-    Avatar,
     TextField,
     InputAdornment,
     Button,
+    CircularProgress
 } from "@mui/material";
-import { Api, Article } from "./api";
 import SearchRounded from "@mui/icons-material/SearchRounded";
+import ArticleList from './components/article/ArticleList'
 
-const client = new Api();
 
 export const Home = () => {
     const [search, setSearch] = React.useState("");
-    const [articles, setArticles] = React.useState<Article[]>([]);
-
-    const getArticles = React.useCallback(() => {
-        client.articles
-            .articlesList({
-                title_contains: search,
-            })
-            .then(({ data }) => {
-                setArticles(data);
-            });
-    }, []);
-
-    React.useEffect(() => {
-        getArticles();
-    }, []);
 
     return (
         <>
@@ -51,62 +30,25 @@ export const Home = () => {
                         InputProps={{
                             startAdornment: (
                                 <InputAdornment position="start">
-                                    <SearchRounded />
+                                    <SearchRounded/>
                                 </InputAdornment>
                             ),
                         }}
                         variant="standard"
                     />
-                    <Button onClick={() => getArticles()}>Search</Button>
+                    <Button onClick={() => {
+                    }}>Search</Button>
                 </Box>
-                <Box sx={{ px: 2, border: "1px solid red" }}>
+                <Box sx={{px: 2, border: "1px solid red"}}>
                     <p>Task 2: Implement pagination</p>
                 </Box>
             </Box>
             <div>
-                {articles.map((article) => (
-                    <Card
-                        key={article.id}
-                        sx={{ display: "flex", flexDirection: "column", mb: 2 }}
-                    >
-                        <CardHeader
-                            sx={{
-                                display: "flex",
-                                flex: 1,
-                            }}
-                            avatar={<Avatar src={article.imageUrl} />}
-                            title={article.newsSite}
-                            subheader={article.publishedAt}
-                        />
-                        <Box
-                            sx={{
-                                display: "flex",
-                                flex: 1,
-                                flexDirection: "row",
-                            }}
-                        >
-                            <CardContent sx={{ flex: "1" }}>
-                                <Typography component="div" variant="h5">
-                                    {article.title}
-                                </Typography>
-                                <Typography component="div">
-                                    {article.summary}
-                                </Typography>
-                            </CardContent>
-                            <CardMedia
-                                component="img"
-                                sx={{
-                                    height: 128,
-                                    maxWidth: 128,
-                                    padding: 2,
-                                    objectFit: "cover",
-                                }}
-                                image={article.imageUrl}
-                            />
-                        </Box>
-                    </Card>
-                ))}
+                <Suspense fallback={<CircularProgress/>}>
+                    <ArticleList search={search}/>
+                </Suspense>
             </div>
+
         </>
     );
 };
