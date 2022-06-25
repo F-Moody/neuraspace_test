@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import {App} from "./App";
 import {QueryClient, QueryClientProvider} from 'react-query'
+import ArticleContext from "./context/context";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -17,7 +18,9 @@ const root = ReactDOM.createRoot(
 root.render(
     <React.StrictMode>
         <QueryClientProvider client={queryClient}>
-            <App/>
+            <ArticleContext>
+                <App/>
+            </ArticleContext>
         </QueryClientProvider>
     </React.StrictMode>
 );
