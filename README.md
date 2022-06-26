@@ -17,7 +17,7 @@ Third => useCallBack without the React.Memo component is not very usefull, if yo
 in conjuntion with React.Memo
 
 I've added useCallBack and useMemo inside the Context, for this example is not necessary but if in the future the Context will stay under a different tree path the parent 
-rerender will cause the Context to rerender and all the child with it. To optimize the context could be splitted in two ( one for the setter and another for the 
+rerender will cause the Context to rerender and all the children with it. To optimize the context could be splitted in two ( one for the setter and another for the 
 state value) or you can read the value from the component and then React.Memo the return of the component to avoid unnecessary rerender.
 
 I've added just a test case on the search functionallity because it was explicitly asked so, i'm testing that the function that calls the api will be called 
