@@ -25,7 +25,7 @@ export const Home = () => {
                     justifyContent: "space-between",
                 }}
             >
-                <Box sx={{ display: 'flex', columnGap: "8px"}}>
+                <Box sx={{display: 'flex', columnGap: "8px"}}>
                     <TextField
                         id="input-with-icon-textfield"
                         onChange={(e) => setSearch(e.target.value)}
@@ -38,10 +38,10 @@ export const Home = () => {
                         }}
                         variant="standard"
                     />
-                        <p>Search</p>
+                    <p>Search</p>
 
                 </Box>
-                <Box> <p>Favourite articles number : {favouritecount}</p></Box>
+                <Box><p>Favourite articles number : {favouritecount}</p></Box>
 
             </Box>
             <div>

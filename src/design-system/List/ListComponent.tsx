@@ -5,8 +5,8 @@ type Props = {
     style: React.CSSProperties
 }
 
-export default ({children, style} : Props) => {
-    return(
+export default ({children, style}: Props) => {
+    return (
         <div style={{...style}}>
             {children}
         </div>

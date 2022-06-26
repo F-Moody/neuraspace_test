@@ -7,12 +7,13 @@ type Props = {
 
 type ContextValue = {
     favourites: { [key in string]: string },
-    toggleFavourite:(id: number) => void
+    toggleFavourite: (id: number) => void
 }
 
 const initialValue: ContextValue = {
     favourites: {},
-    toggleFavourite: (id) => {}
+    toggleFavourite: (id) => {
+    }
 }
 export const ArticleContext = createContext(initialValue)
 export const useArticleContext = () => useContext(ArticleContext)

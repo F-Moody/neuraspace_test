@@ -6,9 +6,9 @@ type Props = {
     summary?: string
 }
 
-export default ({title, summary} : Props) => {
-    return(
-        <CardContent sx={{ flex: "1" }}>
+export default ({title, summary}: Props) => {
+    return (
+        <CardContent sx={{flex: "1"}}>
             <Typography component="div" variant="h5">
                 {title}
             </Typography>

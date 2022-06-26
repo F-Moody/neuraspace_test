@@ -1,5 +1,5 @@
 import React from 'react'
-import {Avatar, Box, Card, CardContent, CardHeader, CardMedia, Typography} from "@mui/material";
+import {Box, Card} from "@mui/material";
 
 
 type Props = {

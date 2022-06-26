@@ -1,11 +1,9 @@
 import React, {useDeferredValue, useTransition} from 'react'
 import {Article} from "../../api/api";
-import {useQuery} from "react-query";
 import {TablePagination} from "@mui/material";
 import ListComponent from "../../design-system/List/ListComponent";
 import ArticleComponent from "./Article"
-import { countArticles, getArticles} from "../../api/apiCalls";
-
+import {useArticles, useArticlesCount} from "../../hooks/useArticles";
 
 type Props = {
     search: string
@@ -16,13 +14,11 @@ export default ({search}: Props) => {
     const [rowPerPage, setRowPerPage] = React.useState<number>(10)
     const [pending, startTransition] = useTransition()
     const deferredSearch = useDeferredValue(search)
-
-
-    const {data: articlesCount} = useQuery('count', countArticles)
-    const {data: articles} = useQuery(['articleList', deferredSearch, articlesCount, page, rowPerPage], () => getArticles(page, deferredSearch, rowPerPage))
+    const {data: articlesCount} = useArticlesCount()
+    const {data: articles} = useArticles(deferredSearch, articlesCount as number, page, rowPerPage)
 
     const onPageChange = (e: any, page: number) => {
-        if(page > 0) {
+        if (page > 0) {
             startTransition(() => setPage(page))
         }
     }
@@ -31,13 +27,11 @@ export default ({search}: Props) => {
         setRowPerPage(+event.target.value)
     }
 
-
-
     return (
         <div>
-            <ListComponent style={{opacity : pending ? 0.2 : 1}}>
+            <ListComponent style={{opacity: pending ? 0.2 : 1}}>
                 {articles?.map((article: Article) => (
-                        <ArticleComponent item={article}/>
+                    <ArticleComponent item={article}/>
                 ))}
 
             </ListComponent>

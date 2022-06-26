@@ -9,8 +9,8 @@ import {
     Toolbar,
     Typography,
 } from "@mui/material";
-import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
-import { Home } from "./Home";
+import {BrowserRouter, Link, Route, Routes} from "react-router-dom";
+import {Home} from "./Home";
 
 const mdTheme = createTheme({
     palette: {
@@ -22,13 +22,13 @@ export const App = () => {
     return (
         <ThemeProvider theme={mdTheme}>
             <BrowserRouter>
-                <Box sx={{ display: "flex" }}>
-                    <CssBaseline />
+                <Box sx={{display: "flex"}}>
+                    <CssBaseline/>
                     <AppBar>
                         <Toolbar component="nav">
                             <MenuItem>
                                 <Typography textAlign="center">
-                                    <Link to="/" style={{ color: "white" }}>
+                                    <Link to="/" style={{color: "white"}}>
                                         Home
                                     </Link>
                                 </Typography>
@@ -43,10 +43,10 @@ export const App = () => {
                             overflow: "auto",
                         }}
                     >
-                        <Toolbar />
-                        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+                        <Toolbar/>
+                        <Container maxWidth="lg" sx={{mt: 4, mb: 4}}>
                             <Routes>
-                                <Route path="/" element={<Home />} />
+                                <Route path="/" element={<Home/>}/>
                             </Routes>
                         </Container>
                     </Box>

@@ -25,7 +25,8 @@ export default ({imageUrl, title, subheader, favourite = false, onFavouriteCb}: 
             >
 
             </CardHeader>
-            {favourite ? <StarIcon sx={{cursor: 'pointer'}} onClick={onFavouriteCb}/> : <StarBorderIcon sx={{cursor: 'pointer'}} onClick={onFavouriteCb}/>}
+            {favourite ? <StarIcon sx={{cursor: 'pointer'}} onClick={onFavouriteCb}/> :
+                <StarBorderIcon sx={{cursor: 'pointer'}} onClick={onFavouriteCb}/>}
         </Box>
     )
 }
