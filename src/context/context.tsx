@@ -5,10 +5,14 @@ type Props = {
     children: JSX.Element | JSX.Element[] | undefined;
 }
 
+type ContextValue = {
+    favourites: { [key in string]: string },
+    toggleFavourite:(id: number) => void
+}
 
-const initialValue = {
+const initialValue: ContextValue = {
     favourites: {},
-    toggleFavourite: (id: number) => {}
+    toggleFavourite: (id) => {}
 }
 export const ArticleContext = createContext(initialValue)
 export const useArticleContext = () => useContext(ArticleContext)

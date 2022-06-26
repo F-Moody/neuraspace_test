@@ -12,8 +12,7 @@ type Props = {
 
 export default ({item} : Props) => {
     const {favourites, toggleFavourite} = useArticleContext()
-    // @ts-ignore
-    const isFavouriteItem = !!favourites[item.id.toString()]
+    const isFavouriteItem = !!favourites[item.id!.toString()]
 
     const toggleWrapper = () => toggleFavourite(item.id!)
     return(
@@ -22,7 +21,6 @@ export default ({item} : Props) => {
                                           subheader={item.publishedAt}
                                           imageUrl={item.imageUrl}
                                           favourite={isFavouriteItem}
-                      // @ts-ignore
                                           onFavouriteCb={toggleWrapper}
 
                   />}
